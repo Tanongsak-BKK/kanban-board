@@ -38,12 +38,27 @@ export default function ConfirmModal() {
           <i className="ph-fill ph-warning text-3xl"></i>
         </div>;
       case 'prompt':
+        if (dialog.subType === 'board') {
+          return <div className="w-16 h-16 rounded-full bg-indigo-50 text-indigo-500 flex items-center justify-center mb-6 mx-auto shadow-sm border border-indigo-100 ring-4 ring-indigo-50/50">
+            <i className="ph-fill ph-kanban text-3xl"></i>
+          </div>;
+        }
+        if (dialog.subType === 'column') {
+          return <div className="w-16 h-16 rounded-full bg-indigo-50 text-indigo-500 flex items-center justify-center mb-6 mx-auto shadow-sm border border-indigo-100 ring-4 ring-indigo-50/50">
+            <i className="ph-fill ph-columns text-3xl"></i>
+          </div>;
+        }
+        if (dialog.subType === 'task') {
+          return <div className="w-16 h-16 rounded-full bg-indigo-50 text-indigo-500 flex items-center justify-center mb-6 mx-auto shadow-sm border border-indigo-100 ring-4 ring-indigo-50/50">
+            <i className="ph-fill ph-check-square text-3xl"></i>
+          </div>;
+        }
         return <div className="w-16 h-16 rounded-full bg-indigo-50 text-indigo-500 flex items-center justify-center mb-6 mx-auto shadow-sm border border-indigo-100 ring-4 ring-indigo-50/50">
           <i className="ph-fill ph-user-plus text-3xl"></i>
         </div>;
       case 'alert':
-        return <div className="w-16 h-16 rounded-full bg-emerald-50 text-emerald-500 flex items-center justify-center mb-6 mx-auto shadow-sm border border-emerald-100 ring-4 emerald-50/50">
-          <i className="ph-fill ph-check-circle text-3xl"></i>
+        return <div className="w-16 h-16 rounded-full bg-amber-50 text-amber-500 flex items-center justify-center mb-6 mx-auto shadow-sm border border-amber-100 ring-4 ring-amber-50/50">
+          <i className="ph-fill ph-warning text-3xl"></i>
         </div>;
       default:
         return <div className="w-16 h-16 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center mb-6 mx-auto shadow-sm border border-blue-100 ring-4 ring-blue-50/50">

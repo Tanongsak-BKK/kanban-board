@@ -27,7 +27,7 @@ function BoardColumn({ colId, title, count, children, onDrop, onDragOver }) {
   };
 
   const handleAddTask = async () => {
-    const taskTitle = await prompt("Enter task title:", "", "New Task");
+    const taskTitle = await prompt("Enter task title:", "", "New Task", "task");
     if (taskTitle && taskTitle.trim()) {
       createTask(currentBoardId, colId, { title: taskTitle.trim() });
     }

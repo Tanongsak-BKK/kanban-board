@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { useKanban } from '../context/KanbanContext';
 
 function Sidebar() {
-  const { currentUser, userBoards, currentBoardId, selectBoard, createBoard, logout, userNotifications, clearNotifications } = useKanban();
+  const { currentUser, userBoards, currentBoardId, selectBoard, createBoard, logout, userNotifications, clearNotifications, prompt } = useKanban();
   const [showNotif, setShowNotif] = useState(false);
 
   const handleCreateBoard = async () => {
-    const title = await prompt("Enter new board title:", "", "New Board");
+    const title = await prompt("Enter new board title:", "", "New Board", "board");
     if (title && title.trim()) {
       createBoard(title.trim());
     }

@@ -40,7 +40,6 @@ function Header() {
       try {
         inviteMember(currentBoard.id, username.trim());
         await alert("User invited successfully!", "Success");
-        selectBoard(null); // Return to "Home" (No board selected)
       } catch (err) {
         await alert(err.message, "Invitation Failed");
       }

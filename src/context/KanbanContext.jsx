@@ -93,7 +93,7 @@ export const KanbanProvider = ({ children }) => {
     });
   };
 
-  const customPrompt = (message, defaultValue = '', title = 'Input Required') => {
+  const customPrompt = (message, defaultValue = '', title = 'Input Required', subType = null) => {
     return new Promise((resolve) => {
       setDialog({
         isOpen: true,
@@ -101,6 +101,7 @@ export const KanbanProvider = ({ children }) => {
         title,
         message,
         defaultValue,
+        subType,
         resolve
       });
     });

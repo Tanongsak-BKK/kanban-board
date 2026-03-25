@@ -34,7 +34,7 @@ function App() {
   };
 
   const handleAddColumn = async () => {
-    const title = await prompt("Enter column title:");
+    const title = await prompt("Enter column title:", "", "New Column", "column");
     if (title && title.trim()) {
       createColumn(currentBoard.id, title.trim());
     }
