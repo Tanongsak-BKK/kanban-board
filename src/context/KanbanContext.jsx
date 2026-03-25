@@ -13,7 +13,7 @@ const defaultBoards = [
   {
     id: 'board-1',
     title: 'My First Board',
-    members: ['admin'], // who has access
+    members: ['admin', 'user1', 'user2', 'user3'], // who has access
     columns: [
       {
         id: 'col-todo',
@@ -59,8 +59,24 @@ const defaultBoards = [
 export const KanbanProvider = ({ children }) => {
   // --- STATE ---
   const [users, setUsers] = useState(() => {
+    const defaultUsers = [
+      { username: 'admin', password: 'password' },
+      { username: 'user1', password: 'password' },
+      { username: 'user2', password: 'password' },
+      { username: 'user3', password: 'password' }
+    ];
     const saved = localStorage.getItem('kanban_users');
-    return saved ? JSON.parse(saved) : [{ username: 'admin', password: 'password' }];
+    if (!saved) return defaultUsers;
+    const parsed = JSON.parse(saved);
+    
+    // Ensure all default mockup users exist in the parsed list
+    const merged = [...parsed];
+    defaultUsers.forEach(du => {
+      if (!merged.find(u => u.username === du.username)) {
+        merged.push(du);
+      }
+    });
+    return merged;
   });
 
   const [currentUser, setCurrentUser] = useState(() => {
