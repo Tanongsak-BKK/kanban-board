@@ -23,7 +23,7 @@ export default function Login({ onSwitchToRegister }) {
                 <div className="flex justify-center mb-4 text-indigo-600">
                     <i className="ph ph-kanban text-6xl"></i>
                 </div>
-                <h1 className="text-2xl font-bold text-slate-800 mb-2">Welcome to ProKanban</h1>
+                <h1 className="text-2xl font-bold text-slate-800 mb-2">Welcome to Kanban</h1>
                 <p className="text-slate-500 mb-6">Log in to manage your boards</p>
                 
                 {error && <div className="mb-4 text-red-500 text-sm bg-red-50 p-2 rounded">{error}</div>}

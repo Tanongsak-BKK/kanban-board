@@ -18,7 +18,7 @@ function Sidebar() {
     <aside className="app-sidebar flex flex-col h-full bg-slate-900 text-slate-300 w-64 border-r border-slate-700">
       <div className="p-4 flex items-center justify-between border-b border-slate-700">
         <div className="flex items-center gap-2 text-white font-bold text-xl">
-          <i className="ph-fill ph-kanban text-indigo-400"></i> ProKanban
+          <i className="ph-fill ph-kanban text-indigo-400"></i> Kanban
         </div>
         
         {/* Notifications Toggle */}
