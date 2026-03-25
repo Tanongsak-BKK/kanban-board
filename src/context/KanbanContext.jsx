@@ -8,9 +8,6 @@ export const useKanban = () => {
 
 const generateId = (prefix) => `${prefix}-${Math.random().toString(36).substr(2, 9)}`;
 
-// Default initial data if none exists
-
-
 export const KanbanProvider = ({ children }) => {
   // --- STATE ---
   const [users, setUsers] = useState(() => {
@@ -41,7 +38,7 @@ export const KanbanProvider = ({ children }) => {
 
   const [boards, setBoards] = useState(() => {
     const saved = localStorage.getItem('kanban_boards');
-    return saved ? JSON.parse(saved) : defaultBoards;
+    return saved ? JSON.parse(saved) : [];
   });
 
   // Notifications: simple array of objects { id, message, isRead, userId }
