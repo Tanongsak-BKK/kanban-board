@@ -9,52 +9,7 @@ export const useKanban = () => {
 const generateId = (prefix) => `${prefix}-${Math.random().toString(36).substr(2, 9)}`;
 
 // Default initial data if none exists
-const defaultBoards = [
-  {
-    id: 'board-1',
-    title: 'My First Board',
-    members: ['admin', 'user1', 'user2', 'user3'], // who has access
-    columns: [
-      {
-        id: 'col-todo',
-        title: 'To Do',
-        tasks: [
-          { 
-            id: 'task-1', 
-            title: 'Design Landing Page', 
-            tags: [
-              { label: 'Design', colorClass: 'badge-brand' }, 
-              { label: 'High Priority', colorClass: 'badge-brand' }
-            ], 
-            assignees: [{ name: 'admin', initial: 'A' }] 
-          },
-          { 
-            id: 'task-2', 
-            title: 'Write Copy', 
-            tags: [
-              { label: 'Content', colorClass: 'badge-brand' }
-            ], 
-            assignees: [] 
-          }
-        ]
-      },
-      {
-        id: 'col-inprogress',
-        title: 'In Progress',
-        tasks: [
-          { 
-            id: 'task-3', 
-            title: 'Setup Database', 
-            tags: [
-              { label: 'Backend', colorClass: 'badge-brand' }
-            ], 
-            assignees: [{ name: 'admin', initial: 'A' }] 
-          }
-        ]
-      }
-    ]
-  }
-];
+
 
 export const KanbanProvider = ({ children }) => {
   // --- STATE ---
