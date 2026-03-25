@@ -28,8 +28,9 @@ function TaskModal({ task, colId, onClose }) {
     onClose();
   };
 
-  const handleDelete = () => {
-    if (confirm("Are you sure you want to delete this task?")) {
+  const handleDelete = async () => {
+    const isConfirmed = await confirm("Are you sure you want to delete this task?", "Delete Task");
+    if (isConfirmed) {
       deleteTask(currentBoard.id, colId, task.id);
       onClose();
     }

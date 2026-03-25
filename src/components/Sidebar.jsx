@@ -5,8 +5,8 @@ function Sidebar() {
   const { currentUser, userBoards, currentBoardId, selectBoard, createBoard, logout, userNotifications, clearNotifications } = useKanban();
   const [showNotif, setShowNotif] = useState(false);
 
-  const handleCreateBoard = () => {
-    const title = prompt("Enter new board title:");
+  const handleCreateBoard = async () => {
+    const title = await prompt("Enter new board title:", "", "New Board");
     if (title && title.trim()) {
       createBoard(title.trim());
     }

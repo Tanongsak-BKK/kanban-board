@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useKanban } from '../context/KanbanContext';
 
 function Header() {
-  const { currentBoard, renameBoard, deleteBoard, inviteMember } = useKanban();
+  const { currentBoard, renameBoard, deleteBoard, inviteMember, confirm, alert, prompt, selectBoard } = useKanban();
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [editTitle, setEditTitle] = useState("");
 
@@ -27,20 +27,22 @@ function Header() {
     setIsEditingTitle(false);
   };
 
-  const handleDeleteBoard = () => {
-    if (confirm(`Are you sure you want to delete board "${currentBoard.title}"?`)) {
+  const handleDeleteBoard = async () => {
+    const isConfirmed = await confirm(`Are you sure you want to delete board "${currentBoard.title}"?`, "Delete Board");
+    if (isConfirmed) {
       deleteBoard(currentBoard.id);
     }
   };
 
-  const handleInvite = () => {
-    const username = prompt("Enter username to invite:");
+  const handleInvite = async () => {
+    const username = await prompt("Enter username to invite:", "", "Invite Member");
     if (username && username.trim()) {
       try {
         inviteMember(currentBoard.id, username.trim());
-        alert("User invited successfully!");
+        await alert("User invited successfully!", "Success");
+        selectBoard(null); // Return to "Home" (No board selected)
       } catch (err) {
-        alert(err.message);
+        await alert(err.message, "Invitation Failed");
       }
     }
   };

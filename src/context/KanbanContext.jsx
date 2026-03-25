@@ -59,6 +59,60 @@ export const KanbanProvider = ({ children }) => {
   useEffect(() => { localStorage.setItem('kanban_notifications', JSON.stringify(notifications)); }, [notifications]);
   useEffect(() => { if (currentBoardId) localStorage.setItem('kanban_currentBoardId', currentBoardId); }, [currentBoardId]);
 
+  // --- DIALOG STATE ---
+  const [dialog, setDialog] = useState({
+    isOpen: false,
+    type: 'alert',
+    title: '',
+    message: '',
+    defaultValue: '',
+    resolve: null
+  });
+
+  const customAlert = (message, title = 'Notification') => {
+    return new Promise((resolve) => {
+      setDialog({
+        isOpen: true,
+        type: 'alert',
+        title,
+        message,
+        resolve
+      });
+    });
+  };
+
+  const customConfirm = (message, title = 'Are you sure?') => {
+    return new Promise((resolve) => {
+      setDialog({
+        isOpen: true,
+        type: 'confirm',
+        title,
+        message,
+        resolve
+      });
+    });
+  };
+
+  const customPrompt = (message, defaultValue = '', title = 'Input Required') => {
+    return new Promise((resolve) => {
+      setDialog({
+        isOpen: true,
+        type: 'prompt',
+        title,
+        message,
+        defaultValue,
+        resolve
+      });
+    });
+  };
+
+  const closeDialog = (result) => {
+    if (dialog.resolve) {
+      dialog.resolve(result);
+    }
+    setDialog(prev => ({ ...prev, isOpen: false, resolve: null }));
+  };
+
   // Derived state: the currently active board
   const currentBoard = boards.find(b => b.id === currentBoardId) || null;
 
@@ -157,18 +211,23 @@ export const KanbanProvider = ({ children }) => {
   const inviteMember = (boardId, username) => {
     // Check if user exists
     const userExists = users.some(u => u.username === username);
-    if (!userExists) throw new Error('User does not exist');
+    if (!userExists) throw new Error('ไม่พบชื่อผู้ใช้งานนี้');
+
+    // Check if already a member before updating state
+    const board = boards.find(b => b.id === boardId);
+    if (board && board.members.includes(username)) {
+      throw new Error('ผู้ใช้นี้เป็นสมาชิกในบอร์ดอยู่แล้ว');
+    }
 
     setBoards(prev => prev.map(b => {
       if (b.id === boardId) {
-        if (b.members.includes(username)) throw new Error('User already in board');
         return { ...b, members: [...b.members, username] };
       }
       return b;
     }));
     
     // Notify the user
-    const board = boards.find(b => b.id === boardId);
+    // No need to redeclare board here, it's already defined above
     if (board) {
       addNotification(username, `You were invited to board "${board.title}" by ${currentUser.username}`);
     }
@@ -361,7 +420,14 @@ export const KanbanProvider = ({ children }) => {
     moveTask,
 
 
-    clearNotifications
+    clearNotifications,
+    
+    // Dialog exports
+    dialog,
+    alert: customAlert,
+    confirm: customConfirm,
+    prompt: customPrompt,
+    closeDialog
   };
 
   return (

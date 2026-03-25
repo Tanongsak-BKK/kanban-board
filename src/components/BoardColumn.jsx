@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useKanban } from '../context/KanbanContext';
 
 function BoardColumn({ colId, title, count, children, onDrop, onDragOver }) {
-  const { currentBoardId, renameColumn, deleteColumn, createTask } = useKanban();
+  const { currentBoardId, renameColumn, deleteColumn, createTask, confirm, prompt } = useKanban();
   const [isEditing, setIsEditing] = useState(false);
   const [editTitle, setEditTitle] = useState("");
 
@@ -19,14 +19,15 @@ function BoardColumn({ colId, title, count, children, onDrop, onDragOver }) {
     setIsEditing(false);
   };
 
-  const handleDelete = () => {
-    if (confirm(`Delete column "${title}" and all its tasks?`)) {
+  const handleDelete = async () => {
+    const isConfirmed = await confirm(`Delete column "${title}" and all its tasks?`, "Delete Column");
+    if (isConfirmed) {
       deleteColumn(currentBoardId, colId);
     }
   };
 
-  const handleAddTask = () => {
-    const taskTitle = prompt("Enter task title:");
+  const handleAddTask = async () => {
+    const taskTitle = await prompt("Enter task title:", "", "New Task");
     if (taskTitle && taskTitle.trim()) {
       createTask(currentBoardId, colId, { title: taskTitle.trim() });
     }

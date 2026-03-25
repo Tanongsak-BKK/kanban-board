@@ -5,10 +5,11 @@ import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import BoardColumn from './components/BoardColumn';
 import TaskCard from './components/TaskCard';
+import ConfirmModal from './components/ConfirmModal';
 import { useKanban } from './context/KanbanContext';
 
 function App() {
-  const { currentUser, currentBoard, moveTask, createColumn } = useKanban();
+  const { currentUser, currentBoard, moveTask, createColumn, prompt } = useKanban();
   const [authPage, setAuthPage] = useState('login');
 
   const handleDragStart = (e, taskId, sourceColId) => {
@@ -32,17 +33,22 @@ function App() {
     e.preventDefault(); // Necessary to allow dropping
   };
 
-  const handleAddColumn = () => {
-    const title = prompt("Enter column title:");
+  const handleAddColumn = async () => {
+    const title = await prompt("Enter column title:");
     if (title && title.trim()) {
       createColumn(currentBoard.id, title.trim());
     }
   };
 
   if (!currentUser) {
-    return authPage === 'login' 
-      ? <Login onSwitchToRegister={() => setAuthPage('register')} />
-      : <Register onSwitchToLogin={() => setAuthPage('login')} />;
+    return (
+      <>
+        {authPage === 'login' 
+          ? <Login onSwitchToRegister={() => setAuthPage('register')} />
+          : <Register onSwitchToLogin={() => setAuthPage('login')} />}
+        <ConfirmModal />
+      </>
+    );
   }
 
   return (
@@ -96,6 +102,7 @@ function App() {
           </div>
         </main>
       </div>
+      <ConfirmModal />
     </div>
   );
 }
